@@ -194,7 +194,7 @@ def create_trend_chart(df: pd.DataFrame) -> None:
     fig.update_yaxes(title_text="Profit ($)", secondary_y=True, showgrid=False)
     fig.update_xaxes(showgrid=True, gridcolor='rgba(0,0,0,0.1)')
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 
 def create_department_chart(df: pd.DataFrame) -> None:
@@ -240,7 +240,7 @@ def create_department_chart(df: pd.DataFrame) -> None:
 
     fig.update_xaxes(showgrid=True, gridcolor='rgba(0,0,0,0.1)')
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 
 def create_margin_comparison(df: pd.DataFrame) -> None:
@@ -281,7 +281,7 @@ def create_margin_comparison(df: pd.DataFrame) -> None:
 
     fig.update_xaxes(showgrid=True, gridcolor='rgba(0,0,0,0.1)', range=[0, max(margin_df['gross_margin'])*1.3])
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 
 def create_mom_variance_table(df: pd.DataFrame) -> None:
@@ -317,7 +317,7 @@ def create_mom_variance_table(df: pd.DataFrame) -> None:
 
         st.dataframe(
             mom_df,
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
             column_config={
                 'Revenue': st.column_config.TextColumn(width='medium'),
@@ -354,7 +354,7 @@ def create_department_detail_table(df: pd.DataFrame) -> None:
 
     st.dataframe(
         dept_detail,
-        use_container_width=True,
+        width='stretch',
         hide_index=True
     )
 
@@ -367,8 +367,14 @@ def main():
     st.markdown("### Business Intelligence Analytics")
     st.markdown("---")
 
-    # File path input
-    file_path = st.sidebar.text_input("Data File Path", value="bi_dataset.csv")
+import os
+
+# Determine base path for local vs deployment
+base_path = os.path.dirname(os.path.abspath(__file__))
+default_file = os.path.join(base_path, "bi_dataset.csv")
+
+# File path input
+file_path = st.sidebar.text_input("Data File Path", value=default_file)
 
     # Sidebar filters
     st.sidebar.markdown("---")
